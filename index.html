@@ -2037,7 +2037,7 @@
     <input type="range" id="ospiti-slider" min="50" max="100" value="50" step="5" oninput="aggiorna()">
     <div class="ospiti-range-labels"><span>50</span><span>100</span></div>
     <div style="margin-top:1rem;padding:0.85rem 1.1rem;border-radius:10px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.18);font-size:0.78rem;color:var(--txt2);line-height:1.5;text-align:center;">
-      Hai più di 100 ospiti? <a href="mailto:info@theonebar.it?subject=Richiesta%20preventivo%20oltre%20100%20ospiti" style="color:var(--amber);font-weight:700;text-decoration:none;">Contattaci →</a>
+      Hai più di 100 ospiti? <a href="mailto:info@theonebar.it?subject=Richiesta%20preventivo%20oltre%20100%20ospiti" style="color:var(--amber);font-weight:700;text-decoration:none;">Contattaci direttamente →</a>
     </div>
   </div>
 
@@ -2317,11 +2317,10 @@
           '<div style="color:var(--amber);font-weight:700;">+250 CHF</div></div>';
         extraInfo.innerHTML = html;
       } else {
-        var oraExtra = stato.ospiti * 10;
         var html = '';
         html += '<div style="' + rowStyle + '" onclick="toggleExtra(\'ora\')">' + checkboxHtml(stato.extra.ora) +
-          '<div style="flex:1;">Ora aggiuntiva <span style="opacity:0.6;font-size:0.66rem;">(' + stato.ospiti + ' ospiti × 10 €)</span></div>' +
-          '<div style="color:var(--amber);font-weight:700;">+' + oraExtra.toLocaleString('it-IT') + ' €</div></div>';
+          '<div style="flex:1;">Ora aggiuntiva</div>' +
+          '<div style="color:var(--amber);font-weight:700;">+500 €</div></div>';
         html += '<div style="' + rowStyle + '" onclick="toggleExtra(\'drinkList\')">' + checkboxHtml(stato.extra.drinkList) +
           '<div style="flex:1;">Drink list su misura</div>' +
           '<div style="color:var(--amber);font-weight:700;">+250 €</div></div>';
@@ -2362,7 +2361,7 @@
     } else {
       prezzoBase = calcolaPrezzoIT(stato.ospiti);
       labelPacchetto = 'Open Bar Premium';
-      if (stato.extra.ora) extraTotale += stato.ospiti * 10;
+      if (stato.extra.ora) extraTotale += 500;
       if (stato.extra.drinkList) extraTotale += 250;
     }
 
@@ -2417,8 +2416,8 @@
     var selNum = document.getElementById('ac-selected-num');
     var preventivo = '';
     var extraScelti = [];
-    if (stato.extra.ora) extraScelti.push('Ora aggiuntiva');
-    if (stato.extra.drinkList) extraScelti.push('Drink list su misura');
+    if (stato.extra.ora) extraScelti.push('Ora aggiuntiva (+' + (stato.paese === 'CH' ? Math.round(tariffaCHFperPersona(stato.ospiti) * stato.ospiti * 0.3) + ' CHF' : '500 €') + ')');
+    if (stato.extra.drinkList) extraScelti.push('Drink list su misura (+250 ' + (stato.paese === 'CH' ? 'CHF' : '€') + ')');
     if (stato.formulaSelezionata && selNum) {
       preventivo = 'Open Bar Premium · ' + stato.ospiti + ' ospiti — ' + selNum.textContent;
     }
